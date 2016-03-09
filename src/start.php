@@ -6,6 +6,7 @@
  */
 
 require('utils.php');
+require('lists.php');
 
 /** 一覧リスト
  * latestがある場合は、?dt=で指定の年月まで遡りながら一覧を処理
@@ -14,58 +15,76 @@ require('utils.php');
 $lists = array(
     // ニュース / 月別(?dt=)に取得して、一覧を処理
     array(
-        "category"=>"news",
+        "category"=>["ニュース"],
         "url"=>"http://www.tama-nt.org/htm/news/article/index.asp",
-        "latest"=>"2006/1"
+        "datefrom"=>"2006/1",
+        "desc"=>"/html/body/div/div/div/div/ul/li/a",
+        "subcatepos"=>"desc",  // カテゴリーを詳細から
+        "subcategory"=>"/html/body/div/div/div/h6",
     ),
     // フォトギャラリー / 月別(?dt=)に取得して、一覧を処理
     array(
-        "category"=>"photo",
+        "category"=>["フォトギャラリー"],
         "url"=>"http://www.tama-nt.org/htm/photo/img/index.asp",
-        "latest"=>"2004/4"
+        "datefrom"=>"2004/4",
+        "descpos"=>"desc",  // カテゴリーを詳細から
+        "desc"=>"/html/body/div/div/div/h6",
+        "subcatepos"=>"desc",  // カテゴリーを詳細から
+        "subcategory"=>"/html/body/div/div/div/h6",
     ),
     // 活動報告 / カテゴリを以下に列挙して、tag指定。表示された一覧を処理
     array(
-        "category"=>"活動報告",
+        "category"=>["活動報告", "定期総会"],
         "tag"=>"定期総会",
-        "url"=>"http://www.tama-nt.org/htm/generalmeeting/repo/index.asp"
+        "url"=>"http://www.tama-nt.org/htm/generalmeeting/repo/index.asp",
+        "desc"=>"/html/body/div/div/div/div/ul/li/a",
     ),
     array(
-        "category"=>"活動報告",
+        "category"=>["活動報告", "研究大会"],
         "tag"=>"研究大会",
-        "url"=>"http://www.tama-nt.org/htm/research/repo/index.asp"
+        "url"=>"http://www.tama-nt.org/htm/research/repo/index.asp",
+        "desc"=>"/html/body/div/div/div/div/ul/li/a",
     ),
     array(
-        "category"=>"活動報告",
+        "category"=>["活動報告", "研究会報告"],
         "tag"=>"研究会報告",
-        "url"=>"http://www.tama-nt.org/htm/study/repo/index.asp"
+        "url"=>"http://www.tama-nt.org/htm/study/repo/index.asp",
+        "desc"=>"/html/body/div/div/div/div/ul/li/a",
     ),
     array(
-        "category"=>"活動報告",
-        "tag"=>"部会活動",
-        "url"=>"http://www.tama-nt.org/htm/section/article/index.asp"
+        "category"=>["活動報告", "部会活動", "プロジェクト全般"],
+        "url"=>"http://www.tama-nt.org/htm/section/article/index.asp?c=1",
+        "desc"=>"/html/body/div/div/div/div/ul/li/a",
     ),
     array(
-        "category"=>"活動報告",
+        "category"=>["活動報告", "部会活動", "プロジェクト１"],
+        "url"=>"http://www.tama-nt.org/htm/section/article/index.asp?c=2",
+        "desc"=>"/html/body/div/div/div/div/ul/li/a",
+    ),
+    array(
+        "category"=>["活動報告", "部会活動", "プロジェクト２"],
+        "url"=>"http://www.tama-nt.org/htm/section/article/index.asp?c=3",
+        "desc"=>"/html/body/div/div/div/div/ul/li/a",
+    ),
+    array(
+        "category"=>["活動報告", "部会活動", "プロジェクト３"],
+        "url"=>"http://www.tama-nt.org/htm/section/article/index.asp?c=4",
+        "desc"=>"/html/body/div/div/div/div/ul/li/a",
+    ),
+    array(
+        "category"=>["活動報告", "多摩ＮＴウオッチング"],
         "tag"=>"多摩ＮＴウオッチング",
-        "url"=>"http://www.tama-nt.org/htm/watching/repo/index.asp"
+        "url"=>"http://www.tama-nt.org/htm/watching/repo/index.asp",
+        "desc"=>"/html/body/div/div/div/div/ul/li/a",
     )
 );
 
 /** 処理開始*/
-$util = new CUtil();
-
-/** 月を遡っていく*/
+$clLists = new CLists();
 
 /** 処理開始*/
 foreach($lists as $list) {
-    echo "category=".$list['category']."\n";
-    $xml = $util->getURL($list['url']);
-    file_put_contents("temp.ele", print_r($xml, true));
-    // 解析してみる
-    $h2 = $xml->xpath('/body');
-    print_r($xml->xpath('/html/body/div/div/div/h2'));
-    print_r($xml->xpath('/html/body/div/div/div/ul/li/a'));
+    $data = $clLists->proc($list, []);
 }
 
 

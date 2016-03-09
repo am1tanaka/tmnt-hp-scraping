@@ -2,12 +2,11 @@
 /** ユーティリティクラス*/
 
 class CUtil {
-
     /** 指定のURLのHTMLを取得して、XMLオブジェクトとして返す
      * @param string $url 取得するURL
      * @return SimpleMLElement 変換したオブジェクト
     */
-    public function getURL($url) {
+    public static function getURL($url) {
         // URLからHTMLの取得
         $html = file_get_contents($url);
 
@@ -17,7 +16,7 @@ class CUtil {
 
         // XMLに変換
         $domDocument = new domDocument();
-        $domDocument->loadHTML($html);
+        @$domDocument->loadHTML($html);
         $xmlstr = $domDocument->saveXML();
 
         file_put_contents("temp.xml", $xmlstr);
