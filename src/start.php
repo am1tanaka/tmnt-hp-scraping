@@ -19,7 +19,6 @@ $lists = array(
         "url"=>"http://www.tama-nt.org/htm/news/article/index.asp",
         "datefrom"=>"2006/1",
         "desc"=>"/html/body/div/div/div/div/ul/li/a",
-        "subcatepos"=>"desc",  // カテゴリーを詳細から
         "subcategory"=>"/html/body/div/div/div/h6",
     ),
     // フォトギャラリー / 月別(?dt=)に取得して、一覧を処理
@@ -29,7 +28,6 @@ $lists = array(
         "datefrom"=>"2004/4",
         "descpos"=>"desc",  // カテゴリーを詳細から
         "desc"=>"/html/body/div/div/div/h6",
-        "subcatepos"=>"desc",  // カテゴリーを詳細から
         "subcategory"=>"/html/body/div/div/div/h6",
     ),
     // 活動報告 / カテゴリを以下に列挙して、tag指定。表示された一覧を処理
@@ -86,6 +84,5 @@ $clLists = new CLists();
 foreach($lists as $list) {
     $data = $clLists->proc($list, []);
 }
-
 
 ?>

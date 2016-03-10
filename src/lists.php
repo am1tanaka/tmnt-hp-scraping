@@ -23,7 +23,7 @@ class CLists {
                 $href = $desclist->attributes()[0];
                 $descurl = pathinfo($list['url'], PATHINFO_DIRNAME)."/".$href[0];
                 // 詳細の処理
-                CDesc::getDescPage($descurl);
+                $ret = CDesc::getDescPage($descurl, $list);
             }
         }
     }
