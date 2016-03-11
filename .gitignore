@@ -5,3 +5,4 @@ selenium-server-*.jar
 /.settings
 temp.*
 src/images
+result.json

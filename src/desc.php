@@ -42,14 +42,25 @@ class CDesc {
         }
     }
 
+    /**
+     * 指定のURLから詳細ページをダウンロードして、
+     * 要素の取り出し、イメージのダウンロードを実施して、
+     * 取り出した要素を連想配列で返す
+     * @param string $url 詳細ページのURL
+     * @param array $list よみ出し時のパラメータ
+     * @return array 読み込んだデータを収めた連想配列
+     */
     public static function getDescPage($url, $list) {
         $ret = [
             "title"=>"",
             "date"=>"",
             "body"=>"",
-            "category"=>""
+            "category"=>$list['category']
         ];
         $stidx = 0;
+
+        // アクセスを出力
+        echo "$url \n";
 
         // エンコードを設定
         mb_language("ja");
@@ -95,12 +106,12 @@ class CDesc {
                 // カテゴリーを取り出す
                 if (array_key_exists("subcategory", $list)) {
                     $cate = $bodydiv->xpath($list['subcategory']);
+                    // 変換ミスなので結果を出力
                     if (count($cate) == 0) {
-                        echo $url."\n";
                         print_r($ret);
                     }
                     $sepas = mb_split("『", $cate[0]->__toString());
-                    $ret['category'] = mb_substr($sepas[1], 0, -1);
+                    $ret['category'][] = mb_substr($sepas[1], 0, -1);
                     break;
                 }
             }

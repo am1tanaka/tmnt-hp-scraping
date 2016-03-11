@@ -11,6 +11,8 @@ class CLists {
      * 取り出したページの情報を連想配列に入れて返す
      */
     function procList($url, $list) {
+        $ret = [];
+
         // ページを取得
         $xmllist = CUtil::getURL($url);
 
@@ -18,21 +20,22 @@ class CLists {
         $desclists = $xmllist->xpath($list['desc']);
         foreach($desclists as $desclist) {
             if (mb_strpos($desclist[0], "詳細ページ")) {
-                echo $url."\n";
                 // 詳細へのリンクを取得
                 $href = $desclist->attributes()[0];
                 $descurl = pathinfo($list['url'], PATHINFO_DIRNAME)."/".$href[0];
                 // 詳細の処理
-                $ret = CDesc::getDescPage($descurl, $list);
+                $ret[] = CDesc::getDescPage($descurl, $list);
             }
         }
+        return $ret;
     }
 
     /** リストを受け取って、一覧の呼び出し処理を行う
     */
-    public function proc($list, $outputdata) {
-        $y = 2016;
-        $m = 3;
+    public function proc($list) {
+        $y = date("Y")-0;
+        $m = date("n")-0;
+        $ret = [];
 
         // 時間で回すか？
         if (array_key_exists("datefrom", $list)) {
@@ -41,7 +44,7 @@ class CLists {
                 $dt = "$y/$m";
 
                 // 処理
-                $outputdata[] = $this->procList($list['url']."?dt=$dt", $list);
+                $ret = array_merge($ret, $this->procList($list['url']."?dt=$dt", $list));
 
                 // 更新
                 $m--;
@@ -52,8 +55,10 @@ class CLists {
             } while ($dt !== $list['datefrom']);
         }
         else {
-            $outputdata[] = $this->procList($list['url'], $list);
+            $ret = array_merge($ret, $this->procList($list['url'], $list));
         }
+
+        return $ret;
     }
 }
 ?>

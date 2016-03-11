@@ -79,10 +79,14 @@ $lists = array(
 
 /** 処理開始*/
 $clLists = new CLists();
+$result = [];
 
 /** 処理開始*/
 foreach($lists as $list) {
-    $data = $clLists->proc($list, []);
+    $result = array_merge($result, $clLists->proc($list));
 }
+
+/** 作成したオブジェクトをJSON形式にして保存する*/
+file_put_contents("./result.json", json_encode($result));
 
 ?>
