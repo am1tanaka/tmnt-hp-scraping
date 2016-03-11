@@ -15,6 +15,10 @@ class CLists {
 
         // ページを取得
         $xmllist = CUtil::getURL($url);
+        if ($xmllist === false) {
+            $ret['error'] = $url;
+            return $ret;
+        }
 
         // 詳細をリストアップ
         $desclists = $xmllist->xpath($list['desc']);
@@ -32,10 +36,12 @@ class CLists {
 
     /** リストを受け取って、一覧の呼び出し処理を行う
     */
-    public function proc($list) {
-        $y = date("Y")-0;
-        $m = date("n")-0;
+    public function proc($list, $y=-1, $m=-1) {
         $ret = [];
+        if ($y == -1) {
+            $y = date("Y")-0;
+            $m = date("n")-0;
+        }
 
         // 時間で回すか？
         if (array_key_exists("datefrom", $list)) {
