@@ -19,7 +19,7 @@ class StackTest extends PHPUnit_Framework_TestCase
             "category"=>["フォトギャラリー"],
             "url"=>"http://www.tama-nt.org/htm/photo/img/index.asp",
             "datefrom"=>"2004/4",
-            "desc"=>"/html/body/div/div/div/h6",
+            "desc"=>"/html/body/div/div/div/p/a",
             "subcategory"=>"/html/body/div/div/div/h6",
         ),
         // 2:活動報告 / カテゴリを以下に列挙して、tag指定。表示された一覧を処理
@@ -121,27 +121,22 @@ class StackTest extends PHPUnit_Framework_TestCase
 
     /** 個別テスト*/
     public function _testOne() {
-        $idx = 9;
+        $idx = 1;
 
         /** 処理開始*/
         $clLists = new CLists();
         $result = [];
 
         /** 処理開始*/
-        echo "count=".count($result)."\n";
-        $result = array_merge($result, $clLists->proc($this->lists[3]));
-        echo "count=".count($result)."\n";
-        $result = array_merge($result, $clLists->proc($this->lists[$idx-1]));
-        echo "count=".count($result)."\n";
         $result = array_merge($result, $clLists->proc($this->lists[$idx]));
         echo "count=".count($result)."\n";
 
         /** 作成したオブジェクトをJSON形式にして保存する*/
-        file_put_contents("./result.json", json_encode($result));
+        file_put_contents("./result_one.json", json_encode($result));
 
         // テキストにして出力
-        $read = json_decode(file_get_contents("./result.json"));
-        file_put_contents("./result.txt", print_r($read, true));
+        $read = json_decode(file_get_contents("./result_one.json"));
+        file_put_contents("./result_one.txt", print_r($read, true));
     }
 
     // JSONの保存テスト

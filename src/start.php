@@ -26,8 +26,7 @@ $lists = array(
         "category"=>["フォトギャラリー"],
         "url"=>"http://www.tama-nt.org/htm/photo/img/index.asp",
         "datefrom"=>"2004/4",
-        "descpos"=>"desc",  // カテゴリーを詳細から
-        "desc"=>"/html/body/div/div/div/h6",
+        "desc"=>"/html/body/div/div/div/p/a",
         "subcategory"=>"/html/body/div/div/div/h6",
     ),
     // 活動報告 / カテゴリを以下に列挙して、tag指定。表示された一覧を処理

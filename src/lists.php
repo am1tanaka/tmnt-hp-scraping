@@ -13,6 +13,8 @@ class CLists {
     function procList($url, $list) {
         $ret = [];
 
+        echo $url." ";
+
         // ページを取得
         $xmllist = CUtil::getURL($url);
         if ($xmllist === false) {
@@ -23,7 +25,7 @@ class CLists {
         // 詳細をリストアップ
         $desclists = $xmllist->xpath($list['desc']);
         foreach($desclists as $desclist) {
-            if (mb_strpos($desclist[0], "詳細ページ")) {
+            if (mb_strpos($desclist[0], "詳細ページ") !== false) {
                 // 詳細へのリンクを取得
                 $href = $desclist->attributes()[0];
                 $descurl = pathinfo($list['url'], PATHINFO_DIRNAME)."/".$href[0];
@@ -31,6 +33,8 @@ class CLists {
                 $ret[] = CDesc::getDescPage($descurl, $list);
             }
         }
+
+        echo "\n";
         return $ret;
     }
 
