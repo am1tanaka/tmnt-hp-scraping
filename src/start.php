@@ -88,5 +88,6 @@ foreach($lists as $list) {
 
 /** 作成したオブジェクトをJSON形式にして保存する*/
 file_put_contents("./result.json", json_encode($result));
-
+$read = json_decode(file_get_contents("./result.json"));
+file_put_contents("./result.txt", print_r($read, true));
 ?>

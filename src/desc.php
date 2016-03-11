@@ -68,7 +68,8 @@ class CDesc {
         // 詳細ページを取得
         $pagexml = CUtil::getURL($url);
         if ($pagexml === false) {
-            return ["error"=>$url];
+            $ret = ["error"=>$url];
+            return $ret;
         }
         $bodys = $pagexml->xpath(CDesc::$XPATH_TABLE['body']);
 

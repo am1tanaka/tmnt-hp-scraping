@@ -6,3 +6,4 @@ selenium-server-*.jar
 temp.*
 src/images
 result.json
+result.txt
