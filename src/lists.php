@@ -16,7 +16,7 @@ class CLists {
         // ページを取得
         $xmllist = CUtil::getURL($url);
         if ($xmllist === false) {
-            $ret['error'] = $url;
+            $ret[] = ['error'=>$url];
             return $ret;
         }
 
