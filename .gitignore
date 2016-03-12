@@ -3,13 +3,8 @@ composer.phar
 composer.lock
 selenium-server-*.jar
 /.settings
-temp.*
 src/images
 result.json
 result.txt
-
-result_one.json
-
-result_one.txt
-
-src/sympo2007/070415.jpg
+src/config.php
+temp/*

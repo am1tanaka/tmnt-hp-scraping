@@ -10,13 +10,13 @@ class CLists {
      * 必要に応じて、カテゴリーの取得や、詳細処理の呼び出しを行う。
      * 取り出したページの情報を連想配列に入れて返す
      */
-    function procList($url, $list) {
+    function procList($url, $list, $output = false) {
         $ret = [];
 
-        echo $url." ";
+        echo "list=".$url."\n";
 
         // ページを取得
-        $xmllist = CUtil::getURL($url);
+        $xmllist = CUtil::getURL($url, $output);
         if ($xmllist === false) {
             $ret[] = ['error'=>$url];
             return $ret;
@@ -40,7 +40,7 @@ class CLists {
 
     /** リストを受け取って、一覧の呼び出し処理を行う
     */
-    public function proc($list, $y=-1, $m=-1) {
+    public function proc($list, $output = false, $y=-1, $m=-1) {
         $ret = [];
         if ($y == -1) {
             $y = date("Y")-0;
@@ -54,7 +54,7 @@ class CLists {
                 $dt = "$y/$m";
 
                 // 処理
-                $ret = array_merge($ret, $this->procList($list['url']."?dt=$dt", $list));
+                $ret = array_merge($ret, $this->procList($list['url']."?dt=$dt", $list, $output));
 
                 // 更新
                 $m--;
@@ -65,7 +65,7 @@ class CLists {
             } while ($dt !== $list['datefrom']);
         }
         else {
-            $ret = array_merge($ret, $this->procList($list['url'], $list));
+            $ret = array_merge($ret, $this->procList($list['url'], $list, $output));
         }
 
         return $ret;
