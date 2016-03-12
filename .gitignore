@@ -4,7 +4,10 @@ composer.lock
 selenium-server-*.jar
 /.settings
 src/images
+category_list.csv
 result.json
 result.txt
+result-photo.json
+result-photo.txt
 src/config.php
 temp/*
