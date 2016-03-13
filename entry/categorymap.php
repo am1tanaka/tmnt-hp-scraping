@@ -5,6 +5,41 @@
  */
 
 class CCategoryMap {
+    public static $CATE_ID = [
+        [
+            "to"=>["ニュース","研究会"],
+            "id"=>"in-category-1"
+        ],
+        [
+            "to"=>["ニュース","総会"],
+            "id"=>"in-category-3"
+        ],
+        [
+            "to"=>["ニュース","学会誌"],
+            "id"=>"in-category-14"
+        ],
+        [
+            "to"=>["ニュース","活動報告"],
+            "id"=>"in-category-9"
+        ],
+        [
+            "to"=>["ニュース","事務局から"],
+            "id"=>"in-category-4"
+        ],
+        [
+            "to"=>["フォトギャラリー","ニュータウンで見かける野鳥"],
+            "id"=>"in-category-13"
+        ],
+        [
+            "to"=>["フォトギャラリー","ニュータウンの景色"],
+            "id"=>"in-category-15"
+        ],
+        [
+            "to"=>["フォトギャラリー","各種イベントから"],
+            "id"=>"in-category-16"
+        ]
+    ];
+
     public static $MAP = [
         // ニュース_研究会_,51,
         [
