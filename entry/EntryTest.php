@@ -10,10 +10,10 @@ require("./entry/PageManage.php");
 require("./entry/categorymap.php");
 
 
-/** 登録を開始するデータのインデックス*/
-define("START", 2);
+/** 登録を開始するデータのインデックス(0から276まで)*/
+define("START", 90);
 /** 登録する数*/
-define("COUNT", 10);
+define("COUNT", 186);
 
 class EntryTest extends PHPUnit_Extensions_Selenium2TestCase {
     protected function setUp()
@@ -41,12 +41,14 @@ class EntryTest extends PHPUnit_Extensions_Selenium2TestCase {
 
         // 記事の追加
         for ($i=START ; $i<START+COUNT; $i++) {
+            echo "$i - ";
             CPageManage::newEntry();
             CPageManage::entryData(
                 $datas[$i]->title,
                 $datas[$i]->date,
                 $datas[$i]->body,
                 $datas[$i]->category);
+            echo "done, ";
         }
     }
 
