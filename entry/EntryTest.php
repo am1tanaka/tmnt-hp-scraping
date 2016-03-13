@@ -11,9 +11,9 @@ require("./entry/categorymap.php");
 
 
 /** 登録を開始するデータのインデックス*/
-define("START", 0);
+define("START", 2);
 /** 登録する数*/
-define("COUNT", 2);
+define("COUNT", 10);
 
 class EntryTest extends PHPUnit_Extensions_Selenium2TestCase {
     protected function setUp()

@@ -6,10 +6,27 @@
 
 define('PHOTO_PATH','http://www2.tama-nt.org/wordpress/wp-content/uploads/2016/03/');
 
+/**
+ * イメージ
+ * @param string $needle 検索する文字列
+ * @param string $str 処理対象の本文
+ * @param int $start 検索開始場所
+ * @return array path=取り出した指定されているパスとファイル名
+ *               name=ファイル名
+ *               forward=切り出す直前までの文字列。クオートは削除
+ *               back=取り出した後に続く文字列。クオートは削除
+ *               next=次に検索を開始する先頭からの文字数
+ */
 function getImageFile($needle, $str, $start) {
     $ret = [];
     $posst = mb_stripos($str, $needle, $start);
+    if ($posst === false) {
+        return false;
+    }
     $posend = mb_stripos($str, " ", $posst);
+    if ($posend === false) {
+        $posend = mb_stripos($str, ">", $posst);
+    }
     $path = mb_substr($str, $posst+mb_strlen($needle), $posend-$posst-mb_strlen($needle));
     $path = preg_replace("/'|\"/", "", $path);
 
@@ -28,23 +45,35 @@ function getImageFile($needle, $str, $start) {
 $datas = json_decode(file_get_contents("./result.json"));
 mb_language('ja');
 
-$data = $datas[0];
-$start = 0;
-//foreach($datas as $data) {
-    $path = getImageFile("href=", $data->body, $start);
-    echo $path['path']."|\n";
-    echo $path['name']."|\n";
-    $start = $path['next'];
-    echo $start."\n";
-    echo $path['forward']."|\n";
-    echo $path['back']."|\n";
+// 結果
+for($i=0 ; $i<count($datas) ; $i++) {
+    $start = 0;
+    $body =  preg_replace("/&#13;/", "", $datas[$i]->body);
 
-    /*
-    $fname = basename($data->body);
-    $data->body = preg_replace('/src="images\/.+"/i', 'src="'.PHOTO_PATH.$fname.'"', $data->body);
-    */
-//}
-//echo $data->body;
+    // a要素を書き換える
+    for($start=0; $start<mb_strlen($body); ) {
+        $ret = getImageFile("href=", $body, $start);
+        if ($ret === false) {
+            break;
+        }
+        $body = $ret['forward']."'".PHOTO_PATH.$ret['name']."'";
+        $start = mb_strlen($body);
+        $body .= $ret['back'];
+    }
+
+    // img要素を書き換える
+    for($start=0; $start<mb_strlen($body); ) {
+        $ret = getImageFile("src=", $body, $start);
+        if ($ret === false) {
+            break;
+        }
+        $body = $ret['forward']."'".PHOTO_PATH.$ret['name']."'";
+        $start = mb_strlen($body);
+        $body .= $ret['back'];
+    }
+
+    $datas[$i]->body = $body;
+}
 
 // JSON化して保存
 file_put_contents("./result-photo.json", json_encode($datas));
