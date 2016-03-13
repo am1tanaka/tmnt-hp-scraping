@@ -55,35 +55,35 @@ class CCategoryMap {
     public static $CATE_ID = [
         [
             "to"=>["ニュース","研究会"],
-            "id"=>"in-category-1"
+            "id"=>["in-category-5", "in-category-1"]
         ],
         [
             "to"=>["ニュース","総会"],
-            "id"=>"in-category-3"
+            "id"=>["in-category-5", "in-category-3"]
         ],
         [
             "to"=>["ニュース","学会誌"],
-            "id"=>"in-category-14"
+            "id"=>["in-category-5", "in-category-14"]
         ],
         [
             "to"=>["ニュース","活動報告"],
-            "id"=>"in-category-9"
+            "id"=>["in-category-5", "in-category-9"]
         ],
         [
             "to"=>["ニュース","事務局から"],
-            "id"=>"in-category-4"
+            "id"=>["in-category-5", "in-category-4"]
         ],
         [
             "to"=>["フォトギャラリー","ニュータウンで見かける野鳥"],
-            "id"=>"in-category-13"
+            "id"=>["in-category-12", "in-category-13"]
         ],
         [
             "to"=>["フォトギャラリー","ニュータウンの景色"],
-            "id"=>"in-category-15"
+            "id"=>["in-category-12", "in-category-15"]
         ],
         [
             "to"=>["フォトギャラリー","各種イベントから"],
-            "id"=>"in-category-16"
+            "id"=>["in-category-12", "in-category-16"]
         ]
     ];
 

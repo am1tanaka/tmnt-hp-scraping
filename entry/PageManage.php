@@ -5,26 +5,42 @@
 
 class CPageManage {
     /** 管理ページから新規追加へ*/
-    public static function toNewEntry() {
+    public static function toNews() {
         CUtil::$me->clickByLinkText("ニュース の管理");
+    }
+
+    public static function newEntry() {
         CUtil::$me->clickByLinkText("新規追加");
     }
 
     /** データを入力する*/
-    public static function entryData($title, $body, $category) {
+    public static function entryData($title, $date, $body, $category) {
         // テキストに切り替える
         CUtil::$me->clickById("content-html");
 
         // タイトル
-        CUtil::$me->setTextById("title-prompt-text", $title);
+        CUtil::$me->setTextById("title", $title);
+
+        // 日付
+        CUtil::$me->clickByClass("edit-timestamp");
+        $dt = explode("/", $date);
+        CUtil::$me->setTextById("aa", $dt[0]);
+        CUtil::$me->selectByLabel("mm", ($dt[1]-0)."月");
+        CUtil::$me->setTextById("jj", $dt[2]-0);
+        CUtil::$me->setTextById("hh", "12");
+        CUtil::$me->setTextById("mn", "00");
+        CUtil::$me->clickByLinkText("OK");
 
         // 本文
-        CUtil::$me->setTextById("content", $body);
+        $remcrlf = preg_replace("/&#13;/", "", $body);
+        CUtil::$me->setTextById("content", $remcrlf);
 
         // カテゴリーを設定
-        $cateid = CCategoryMap::getCategoryID($category);
-        if ($cateid) {
-            CUtil::$me->clickById($cateid);
+        $cateids = CCategoryMap::getCategoryID($category);
+        foreach($cateids as $cateid) {
+            if ($cateid) {
+                CUtil::$me->clickById($cateid);
+            }
         }
 
         // タグを設定
@@ -35,8 +51,18 @@ class CPageManage {
             CUtil::$me->clickByClass("tagadd");
         }
 
-        // 決定
-        CUtil::$me->clickById("save-post");
+        // トップにスクロール
+        CUtil::scroll(0);
+
+        while(true) {
+            try {
+                // 決定
+                CUtil::$me->clickById("save-post");
+                break;
+            } catch (Exception $e) {
+                sleep(1);
+            }
+        }
     }
 }
 
