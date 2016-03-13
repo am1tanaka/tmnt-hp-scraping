@@ -31,11 +31,23 @@ class EntryTest extends PHPUnit_Extensions_Selenium2TestCase {
         CPageManage::toNewEntry();
 
         // 記事の追加
-        CPageManage::entryData("title", "body", "category", "tag");
+        CPageManage::entryData("title", "body", ["活動報告","部会活動","プロジェクト全般"]);
 
         sleep(30);
     }
 
+    /** カテゴリーのマッチングテスト*/
+    public function _testCategory() {
+        $result = file_get_contents("./result.json");
+        $datas = json_decode($result);
+        foreach($datas as $data) {
+            foreach($data->category as $k => $v) {
+                echo $v.",";
+            }
+            echo "\n";
+            echo CCategoryMap::getCategoryID($data->category)."\n";
+        }
+    }
 
 }
 

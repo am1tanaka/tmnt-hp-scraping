@@ -5,6 +5,53 @@
  */
 
 class CCategoryMap {
+    /**
+     * カテゴリーの配列を渡して、対応するカテゴリーIDを返す
+     */
+    public static function getCategoryID($cate) {
+        $map = CCategoryMap::getCategoryData($cate);
+        if ($map) {
+            // 一致したので、toに対応するカテゴリーを探して返す
+            foreach(CCategoryMap::$CATE_ID as $cate_id) {
+                if (count(array_diff($map['to'], $cate_id['to'])) === 0) {
+                    return $cate_id['id'];
+                }
+            }
+        }
+
+        echo "not match category:";
+        print_r($cate);
+        return false;
+    }
+
+    /**
+     * 配列で渡したカテゴリーに対応するタグの配列を返す
+     */
+    public static function getCategoryTags($cate) {
+        $map = CCategoryMap::getCategoryData($cate);
+        if ($map) {
+            return $map['tag'];
+        }
+
+        return false;
+    }
+
+    /**
+     * 配列で渡したカテゴリーに対応するMAPデータを返す
+     */
+    public static function getCategoryData($cate) {
+        foreach(CCategoryMap::$MAP as $map) {
+            // 元の配列が一致するものを探す
+            if (count(array_diff($cate, $map['from'])) === 0) {
+                return $map;
+            }
+        }
+
+        echo "not match category:";
+        print_r($cate);
+        return false;
+    }
+
     public static $CATE_ID = [
         [
             "to"=>["ニュース","研究会"],
