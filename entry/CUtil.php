@@ -12,6 +12,7 @@ class CUtil {
     }
 
     public static function setTextById($id, $in) {
+        CUtil::waitById($id);
         $elem = CUtil::$me->sele->byId($id);
         $elem->value("");
         $elem->clear();
@@ -26,11 +27,21 @@ class CUtil {
         $elem->selectOptionByLabel($label);
     }
 
-    public static function waitById($id) {
-        while(true) {
-            if (CUtil::$me->sele->using("id", $id)) break;
+    /** 指定の要素が表示されるのを待つ*/
+    public function waitByUsing($st, $val) {
+        for ($i=0 ; $i<10 ; $i++) {
+            if (count($this->usingElement($st, $val)) > 0) break;
             sleep(1);
         }
+    }
+
+    /** 指定のストラテジーと値の要素を返す。*/
+    public function usingElement($st, $value) {
+        return $this->sele->elements($this->sele->using($st)->value($value));
+    }
+
+    public static function waitById($id) {
+        CUtil::$me->waitByUsing("id", $id);
     }
 
     public static function clickById($id) {
@@ -40,10 +51,12 @@ class CUtil {
     }
 
     public static function clickByClass($class) {
+        CUtil::$me->waitByUsing("class name", $class);
         CUtil::$me->sele->byClassName($class)->click();
     }
 
     public static function clickByLinkText($text) {
+        CUtil::$me->waitByUsing("link text", $text);
         CUtil::$me->sele->byLinkText($text)->click();
     }
 

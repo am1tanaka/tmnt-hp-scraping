@@ -39,7 +39,8 @@ class CPageManage {
 
             // 本文
             $remcrlf = preg_replace("/&#13;/", "", $body);
-            CUtil::$me->setTextById("content", $remcrlf);
+            $tab = preg_replace("/\t/", "&#009;", $remcrlf);
+            CUtil::$me->setTextById("content", $tab);
             $log.="-SetBody";
 
             // カテゴリーを設定
@@ -75,9 +76,10 @@ class CPageManage {
             }
             $log.="-Save";
         } catch (Exception $e) {
+            file_put_contents("./temp/error.png", CUtil::$me->sele->currentScreenshot());
             echo "\n".$log;
             file_put_contents("./error.txt", $log."\n", FILE_APPEND);
-            echo "[公開]と[カテゴリー]欄を開いておいてください。\n";
+            echo "\n[公開]と[カテゴリー]欄を開いておいてください。\n";
             echo "http://www2.tama-nt.org/wordpress/wp-admin/post-new.php\n";
         }
     }

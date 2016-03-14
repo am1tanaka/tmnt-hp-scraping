@@ -16,6 +16,18 @@ class EntryTest extends PHPUnit_Extensions_Selenium2TestCase {
         $this->setBrowserUrl(WP_ADMIN_URL);
     }
 
+    public function _testValid() {
+        // CUtilを設定
+        CUtil::$me = new CUtil($this);
+
+        // ページ開始
+        $this->url(WP_ADMIN_URL);
+
+        // 調査
+        CUtil::waitById("user_login");
+
+    }
+
     public function testEntry()
     {
         // CUtilを設定
