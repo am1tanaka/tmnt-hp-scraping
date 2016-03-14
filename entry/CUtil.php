@@ -13,6 +13,7 @@ class CUtil {
 
     public static function setTextById($id, $in) {
         $elem = CUtil::$me->sele->byId($id);
+        $elem->value("");
         $elem->clear();
         $elem->value($in);
     }
