@@ -2,6 +2,7 @@
 /**
  * 写真の名前を以降先に合わせて修正する
  * http://www2.tama-nt.org/wordpress/wp-content/uploads/2016/03/koho03_5.jpg
+ * php ./entry/photoconv.php
  */
 
 define('PHOTO_PATH','http://www2.tama-nt.org/wordpress/wp-content/uploads/2016/03/');
@@ -17,7 +18,7 @@ define('PHOTO_PATH','http://www2.tama-nt.org/wordpress/wp-content/uploads/2016/0
  *               back=取り出した後に続く文字列。クオートは削除
  *               next=次に検索を開始する先頭からの文字数
  */
-function getImageFile($needle, $str, $start) {
+function getFilePath($needle, $str, $start) {
     $ret = [];
     $posst = mb_stripos($str, $needle, $start);
     if ($posst === false) {
@@ -39,6 +40,26 @@ function getImageFile($needle, $str, $start) {
         'next'=>$posend
     ];
     return $ret;
+}
+
+/**
+ * イメージのみを処理する
+ */
+function getImageFile($needle, $str, $start) {
+    for( ; $start < mb_strlen($str) ; )
+    {
+        $ret = getFilePath($needle, $str, $start);
+        if ($ret === false) {
+            return false;
+        }
+        $info = pathinfo($ret['path']);
+        // 画像の拡張子か
+        if (array_key_exists("extension", $info) && (preg_match("/jpg|bmp|gif|png/i", $info['extension']) === 1)) {
+            return $ret;
+        }
+        // 次へ
+        $start = $ret['next'];
+    }
 }
 
 // ファイル読み込み
