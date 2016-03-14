@@ -75,7 +75,7 @@ class CPageManage {
             }
             $log.="-Save";
         } catch (Exception $e) {
-            echo $log;
+            echo "\n".$log;
             file_put_contents("./error.txt", $log."\n", FILE_APPEND);
             echo "[公開]と[カテゴリー]欄を開いておいてください。\n";
             echo "http://www2.tama-nt.org/wordpress/wp-admin/post-new.php\n";

@@ -34,7 +34,7 @@ class EntryTest extends PHPUnit_Extensions_Selenium2TestCase {
         $datas = json_decode(file_get_contents("./result-photo.json"));
 
         // 記事の追加
-        for ($i=START ; $i<START+COUNT; $i++) {
+        for ($i=START ; $i<=END ; $i++) {
             echo "$i - ";
             CPageManage::newEntry();
             CPageManage::entryData(
