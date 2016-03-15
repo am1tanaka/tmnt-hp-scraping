@@ -63,12 +63,13 @@ function getImageFile($needle, $str, $start) {
 }
 
 // ファイル読み込み
-$datas = json_decode(file_get_contents("./result.json"));
+$datas = json_decode(file_get_contents("./results/result.json"));
 mb_language('ja');
 
 // 結果
 for($i=0 ; $i<count($datas) ; $i++) {
     $start = 0;
+    // 改行コードを削除
     $body =  preg_replace("/&#13;/", "", $datas[$i]->body);
 
     // a要素を書き換える
@@ -97,9 +98,9 @@ for($i=0 ; $i<count($datas) ; $i++) {
 }
 
 // JSON化して保存
-file_put_contents("./result-photo.json", json_encode($datas));
+file_put_contents("./results/result-photo.json", json_encode($datas));
 // 確認のため、読めるようにする
-$read = json_decode(file_get_contents("./result-photo.json"));
-file_put_contents("./result-photo.txt", print_r($read, true));
+$read = json_decode(file_get_contents("./results/result-photo.json"));
+file_put_contents("./results/result-photo.txt", print_r($read, true));
 
  ?>

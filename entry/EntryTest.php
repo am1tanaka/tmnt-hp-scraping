@@ -28,7 +28,8 @@ class EntryTest extends PHPUnit_Extensions_Selenium2TestCase {
 
     }
 
-    public function testEntry()
+    /** ニュース登録*/
+    public function testNewsEntry()
     {
         // CUtilを設定
         CUtil::$me = new CUtil($this);
@@ -43,7 +44,7 @@ class EntryTest extends PHPUnit_Extensions_Selenium2TestCase {
         CPageManage::toNews();
 
         // ファイルの読み込み
-        $datas = json_decode(file_get_contents("./result-photo.json"));
+        $datas = json_decode(file_get_contents("./results/result-photo.json"));
 
         // 記事の追加
         for ($i=START ; $i<=END ; $i++) {
@@ -57,6 +58,38 @@ class EntryTest extends PHPUnit_Extensions_Selenium2TestCase {
             echo "done, ";
         }
     }
+
+    /** 固定ページ登録(未完成)*/
+    /*
+    public function testBacknumberEntry()
+    {
+        // CUtilを設定
+        CUtil::$me = new CUtil($this);
+
+        // ページ開始
+        $this->url(WP_ADMIN_URL);
+
+        // ログイン
+        CLogin::login(WP_ID, WP_PASS);
+
+        // 新規登録
+        CPageManage::toKotei();
+
+        // ファイルの読み込み
+        $datas = json_decode(file_get_contents("./results/result-photo.json"));
+
+        // 記事の追加
+        for ($i=START ; $i<=END ; $i++) {
+            echo "$i - ";
+            CPageManage::newEntry();
+            CPageManage::entryKoteiData(
+                $datas[$i]->title,
+                $datas[$i]->date,
+                $datas[$i]->body,
+                ["バックナンバー"]);
+            echo "done, ";
+        }
+    }*/
 
     public function _testTitle() {
         // CUtilを設定

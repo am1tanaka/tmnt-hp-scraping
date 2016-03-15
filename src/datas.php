@@ -3,7 +3,21 @@ class CDatas {
     /** 一覧リスト
      * latestがある場合は、?dt=で指定の年月まで遡りながら一覧を処理
      * ない場合は、表示される一覧を処理
+     * category 登録するカテゴリー
+     * url 一覧ページのURL
+     * datafrom 年月を遡って取得する場合の日付。省略すると表示したページをそのまま探索する
+     * desc 詳細ページのリンクがある要素へのxpath
+     * subcategory カテゴリーを読み込む場合のxpath。省略するとサブカテゴリーは読み込まない
     */
+    /** 学会誌バックナンバー*/
+    public static $BACKNUMBER = array(
+        array(
+            "category"=>["学会誌", "バックナンバー"],
+            "url"=>"http://www.tama-nt.org/htm/magazine/bn/index.asp?c=13",
+            "desc"=>"/html/body/div/div/div/div/ul/li/a",
+        ),
+    );
+
     public static $lists = array(
         // 9:
         array(
@@ -13,6 +27,7 @@ class CDatas {
             "desc"=>"/html/body/div/div/div/div/ul/li/a",
         )
     );
+
 
     /** 取得完了リスト*/
     public static $ALL = array(

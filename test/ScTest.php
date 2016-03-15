@@ -55,8 +55,13 @@ class StackTest extends PHPUnit_Framework_TestCase
         )
     ];
 
+    /** バックナンバー作成*/
+    public function testBacknumber() {
+        $this->procList(CDatas::$BACKNUMBER, "./result_back");
+    }
+
     /** 全体実行*/
-    public function testAll() {
+    public function _testAll() {
         $this->procList(CDatas::$ALL);
     }
 
@@ -94,7 +99,7 @@ class StackTest extends PHPUnit_Framework_TestCase
         $this->procList($this->errorURL2);
     }
 
-    function procList($lists) {
+    function procList($lists, $fname="./result") {
         /** 処理開始*/
         $clLists = new CLists();
         $result = [];
@@ -105,9 +110,9 @@ class StackTest extends PHPUnit_Framework_TestCase
         }
 
         /** 作成したオブジェクトをJSON形式にして保存する*/
-        file_put_contents("./result.json", json_encode($result));
-        $read = json_decode(file_get_contents("./result.json"));
-        file_put_contents("./result.txt", print_r($read, true));
+        file_put_contents($fname.".json", json_encode($result));
+        $read = json_decode(file_get_contents($fname.".json"));
+        file_put_contents($fname.".txt", print_r($read, true));
     }
 
     // エラー文字のチェック

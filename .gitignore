@@ -5,10 +5,7 @@ selenium-server-*.jar
 /.settings
 src/images
 category_list.csv
-result.json
-result.txt
-result-photo.json
-result-photo.txt
+results/*
 */config.php
 temp/*
 error.txt
